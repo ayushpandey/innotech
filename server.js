@@ -10,7 +10,7 @@ http.createServer(function(req, res){
 		res.writeHead(200, {'Content-Type': 'image/gif' });
 		res.end(imgBinary, 'binary');
 
-		console.log(req, Date.now());
+		console.log(req, Date.getTime());
 
 	} else {
 		res.writeHead(200, {'Content-Type': 'text/plain' });
