@@ -8,7 +8,7 @@ http.createServer(function(req, res){
 		var imgHex = '47494638396101000100800000dbdfef00000021f90401000000002c00000000010001000002024401003b';
 		var imgBinary = new Buffer(imgHex, 'hex');
 		res.writeHead(200, {'Content-Type': 'image/gif' });
-		res.end(imgBinary, 'binary');
+		res.end("<img src='https://emailtrack.herokuapp.com/log.gif' width='1 px' height='1 px'>");
 
 		console.log(req);
 
