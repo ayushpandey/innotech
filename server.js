@@ -10,10 +10,10 @@ http.createServer(function(req, res){
 		res.writeHead(200, {'Content-Type': 'image/gif' });
 		res.end(imgBinary, 'binary');
 
-		console.log(req);
+		console.log(req.host + Date.now());
 
 	} else {
 		res.writeHead(200, {'Content-Type': 'text/plain' });
-		res.end('');
+		res.end("It's working");
 	}
 }).listen(process.env.PORT || 3000);
