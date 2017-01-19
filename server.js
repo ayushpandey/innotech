@@ -6,10 +6,10 @@ http.createServer(function(req, res){
 	console.log("Created server");
 	if (requestURL == '/l') {
 		res.writeHead(200, {'Content-Type': 'text/plain' });
-		res.end("It's working");
+		res.send("It's working");
 	} else {
 		res.writeHead(200, {'Content-Type': 'text/plain' });
-		res.end("It's working");
+		res.send("It's working");
 	}
 }).listen(process.env.PORT || 3000);
 console.log("listening on port 3000");
