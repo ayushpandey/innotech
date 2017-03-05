@@ -11,7 +11,7 @@ http.createServer(function(req, res){
 	if (requestURL == '/email') {
 		res.writeHead(200, {'Content-Type': 'text/plain' });
 		res.end("It's asking for an email header");
-		console.log(req);
+		console.log(req.data);
 	}
 
 	else {
