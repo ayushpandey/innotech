@@ -1,22 +1,20 @@
-http = require('http');
-url = require('url');
+var express = require('express');
+var bodyParser = require('body-parser');
+var app = express();
 
-http.createServer(function(req, res){
-	var requestURL = url.parse(req.url, true)['pathname'];
-	console.log("Created server");
-	if (requestURL == '/register') {
-		res.writeHead(200, {'Content-Type': 'text/plain' });
-		res.end("It's registering");
-	}
-	if (requestURL == '/email') {
-		res.writeHead(200, {'Content-Type': 'text/plain' });
-		res.end("It's asking for an email header");
-		console.log(req.data);
-	}
+app.use(bodyParser.urlencoded({
+    extended: true
+}));
 
-	else {
-		res.writeHead(200, {'Content-Type': 'text/plain' });
-		res.end("It's working");
-	}
-}).listen(process.env.PORT || 3000);
-console.log("listening on port 3000");
+app.get('/', function (req, res) {
+  res.send('Hello World!')
+})
+
+app.post('/email', function(req,res){
+	console.log(req.body.msgID);
+	res.send("/email");
+})
+
+app.listen(3000, function () {
+  console.log('Example app listening on port 3000!')
+})
