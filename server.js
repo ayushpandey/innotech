@@ -7,7 +7,12 @@ http.createServer(function(req, res){
 	if (requestURL == '/register') {
 		res.writeHead(200, {'Content-Type': 'text/plain' });
 		res.end("It's registering");
-	} else {
+	}
+	if (requestURL == '/email') {
+		console.log(req);
+	}
+
+	else {
 		res.writeHead(200, {'Content-Type': 'text/plain' });
 		res.end("It's working");
 	}
