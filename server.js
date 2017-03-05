@@ -22,7 +22,7 @@ app.get('/', function (req, res) {
   res.send('Hello World!')
 })
 app.get('/register', function(req,res){
-	res.send(guid().toString());
+	res.end(guid().toString());
 })
 
 app.post('/email', function(req,res){
