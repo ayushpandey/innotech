@@ -26,7 +26,7 @@ app.get('/register', function(req,res){
 app.post('/email', function(req,res){
   console.log("Got something");
   var post_data = req.body;
-	var path = (req.body.ID)+'.json';
+	var path = "/"+req.body.ID+'.json';
 	console.log(path);
 	var post_options = {
       host: 'emailtracker-15c78.firebaseio.com',
