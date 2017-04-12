@@ -31,7 +31,7 @@ app.post('/email', function(req,res){
 	var post_options = {
       host: 'emailtracker-15c78.firebaseio.com',
       path: path,
-      method: 'PUT',
+      method: 'POST',
       headers: {
           'Content-Type': 'application/json',
       }
