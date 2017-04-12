@@ -18,15 +18,15 @@ app.use(bodyParser.json());
 
 app.get('/', function (req, res) {
   res.send('Hello World!')
-})
+});
 app.get('/register', function(req,res){
 	res.end(guid().toString());
-})
+});
 
 app.post('/email', function(req,res){
-
+  console.log("Got something");
   var post_data = req.body;
-	var path = '/msg/1596357/'+(req.body.sender)+'.json';
+	var path = '/msg/1596357/'+(req.body.ID)+'.json';
 	console.log(path);
 	var post_options = {
       host: 'emailtracker-15c78.firebaseio.com',
@@ -40,17 +40,13 @@ app.post('/email', function(req,res){
 		resp.setEncoding('utf8');
 		resp.on('data', function (chunk) {
 			console.log('Response: ' + chunk);
+      res.send("Data Written");
 		});
 	});
 	post_req.write(JSON.stringify(post_data));
   post_req.end();
-
-
-
-
 	//writeUserData(req.body.msgID, req.body.email);
-	res.send("Data Written");
-})
+});
 
 app.listen(process.env.PORT || 3000, function () {
   console.log('sparks flying!!')
