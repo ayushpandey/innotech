@@ -26,6 +26,8 @@ app.get('/register', function(req,res){
 })
 
 app.post('/email', function(req,res){
+  console.log("Got something");
+  /*
 	console.log(req.body.msgID);
 	console.log(req.body.email);
 	var post_data = {
@@ -50,7 +52,7 @@ app.post('/email', function(req,res){
 		});
 	});
 	post_req.write(JSON.stringify(post_data));
-    post_req.end();
+    post_req.end();*/
 
 	//writeUserData(req.body.msgID, req.body.email);
 	res.send("/email");
