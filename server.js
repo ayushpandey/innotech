@@ -26,7 +26,7 @@ app.get('/register', function(req,res){
 })
 
 app.post('/email', function(req,res){
-  console.log("Got something");
+  console.log(req.body);
   /*
 	console.log(req.body.msgID);
 	console.log(req.body.email);
