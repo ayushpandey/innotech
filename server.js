@@ -14,9 +14,7 @@ var app = express();
 firebase.initializeApp(config);
 var database = firebase.database();
 */
-app.use(bodyParser.urlencoded({
-    extended: true
-}));
+app.use(bodyParser.json());
 
 app.get('/', function (req, res) {
   res.send('Hello World!')
@@ -26,7 +24,7 @@ app.get('/register', function(req,res){
 })
 
 app.post('/email', function(req,res){
-  console.log(req);
+  console.log(req.body);
   /*
 	console.log(req.body.msgID);
 	console.log(req.body.email);
