@@ -14,6 +14,7 @@ Schema = new mongoose.Schema({
       sender    : String,
       recipients : Array,
       subject : String,
+      timestamp : String
     }),
 
 trackingLog = mongoose.model('trackingLog',Schema);
@@ -46,7 +47,7 @@ app.post('/read', function(req,res){
   var query = {
     sender : read_data.sender,
     recipients : read_data.recipients,
-    subject : read_data.subject
+    subject : read_data.subject,
   }
   trackingLog.find(query).find(function(data){
     console.log(data);
