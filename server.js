@@ -46,7 +46,9 @@ app.post('/email', function(req,res){
   }
   timestamp = email_data.timestamp.substring(0,lastSpace+1) + hr.toString() + email_data.timestamp.substring(colon)+ time;
   console.log(timestamp);
+  email_data.timestamp = timestamp;
   var log = new trackingLog (email_data);
+  console.log(log);
   log.save(function(err, logResponse,num){
     if(err) console.log(err);
     else {
@@ -60,7 +62,6 @@ app.post('/read', function(req,res){
   console.log("Access on /read");
   var read_data = req.body;
   var ts = read_data.timestamp.replace(/,/g,'').replace(/ at /g, ' ');
-  console.log(ts);
   var query = {
     sender : read_data.sender,
     recipients : read_data.recipients,
