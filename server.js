@@ -75,23 +75,18 @@ app.post('/read', function(req,res){
     timestamp : ts
   }
   trackingLog.find(query,function(err,data){
-    if(err){
-      console.log(err);
-      res.end(err.toString());
+    if(err || data.length==0){
+      res.end();
     } 
     else {
                   // This registration token comes from the client FCM SDKs.
                   console.log(data);
                   var registrationToken = data[0].fcmID; 
-                  var date = Date.now();
-                  date = new Date(date);
-                  date = date.toString();
                   // See the "Defining the message payload" section below for details
                   // on how to define a message payload.
                   var payload = {
                     data: {
                       readBy: read_data.recipients,
-                      timestamp: date
                     }
                   };
 
