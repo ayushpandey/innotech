@@ -1,19 +1,23 @@
 var express = require('express');
 var bodyParser = require('body-parser');
 var http = require('https');
-//var firebase = require('firebase');
+var mongoose = require('mongoose');
 var app = express();
 
-/*var config = {
-    apiKey: "AIzaSyDdSQUFEElPGGDWQaMTsJgGrOAHa0lCzjs",
-	authDomain: "emailtracker-15c78.firebaseapp.com",
-    databaseURL: "https://emailtracker-15c78.firebaseio.com",
-    storageBucket: "emailtracker-15c78.appspot.com",
-    messagingSenderId: "228132621866"
-};
-firebase.initializeApp(config);
-var database = firebase.database();
-*/
+mongoose.connect(process.env.MONGODB_URI, function (error) {
+    if (error) console.error(error);
+    else console.log('mongo connected');
+});
+
+Schema = new mongoose.Schema({
+      ID       : String, 
+      sender    : String,
+      recipients : Array,
+      subject : String,
+    }),
+
+trackingLog = mongoose.model('trackingLog',Schema);
+
 app.use(bodyParser.json());
 
 app.get('/', function (req, res) {
@@ -25,27 +29,28 @@ app.get('/register', function(req,res){
 
 app.post('/email', function(req,res){
   console.log("Got something");
-  var post_data = req.body;
-	var path = "/"+req.body.ID+'.json';
-	console.log(path);
-	var post_options = {
-      host: 'emailtracker-15c78.firebaseio.com',
-      path: path,
-      method: 'POST',
-      headers: {
-          'Content-Type': 'application/json',
-      }
-    };
-	var post_req = http.request(post_options, function(resp) {
-		resp.setEncoding('utf8');
-		resp.on('data', function (chunk) {
-			console.log('Response: ' + chunk);
-      res.send("Data Written");
-		});
-	});
-	post_req.write(JSON.stringify(post_data));
-  post_req.end();
-	//writeUserData(req.body.msgID, req.body.email);
+  var email_data = req.body;
+  var log = new trackingLog (email_data);
+  log.save(function(err, logResponse,num){
+    if(err) console.log(err);
+    else {
+      console.log(logResponse, num);
+    }
+  });
+  //writeUserData(req.body.msgID, req.body.email);
+});
+
+app.post('/read', function(req,res){
+  console.log("Access on /read");
+  var read_data = req.body;
+  var query = {
+    sender : read_data.sender,
+    recipients : read_data.recipients,
+    subject : read_data.subject
+  }
+  trackingLog.find(query).find(function(data){
+    console.log(data);
+  }); 
 });
 
 app.listen(process.env.PORT || 3000, function () {
