@@ -86,7 +86,7 @@ app.post('/read', function(req,res){
                   // on how to define a message payload.
                   var payload = {
                     data: {
-                      readBy: read_data.recipients,
+                      readBy: read_data.me,
                     }
                   };
 
