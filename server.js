@@ -47,16 +47,10 @@ app.post('/email', function(req,res){
   var lastSpace = email_data.timestamp.lastIndexOf(' ');
   var colon = email_data.timestamp.indexOf(':');
   console.log(lastSpace);
-  var hr = Number(email_data.timestamp.substr(lastSpace+1,2));
-  console.log(typeof(hr));
-  if(hr>=13) {
-    hr = hr-12;
-    time = " PM"
-  }
-  else if( hr < 13) {
-    time = " AM"
-  }
-  timestamp = email_data.timestamp.substring(0,lastSpace+1) + hr.toString() + email_data.timestamp.substring(colon)+ time;
+  var hr = email_data.timestamp.substr(lastSpace+1,5);
+  hr = tConvert(hr);
+  console.log(hr);
+  timestamp = email_data.timestamp.substring(0,lastSpace+1) + hr;
   console.log(timestamp);
   email_data.timestamp = timestamp;
   var log = new trackingLog (email_data);
@@ -87,7 +81,7 @@ app.post('/read', function(req,res){
     } 
     else {
                   // This registration token comes from the client FCM SDKs.
-                  console.log(data[0].fcmID);
+                  console.log(data);
                   var registrationToken = data[0].fcmID; 
                   var date = Date.now();
                   date = new Date(date);
@@ -141,4 +135,17 @@ function guid() {
   }
   return s4() + s4() + '-' + s4() + '-' + s4() + '-' +
     s4() + '-' + s4() + s4() + s4();
+}
+
+
+function tConvert (time) {
+  // Check correct time format and split into components
+  time = time.toString ().match (/^([01]\d|2[0-3])(:)([0-5]\d)?$/) || [time];
+
+  if (time.length > 1) { // If time format correct
+    time = time.slice (1);  // Remove full string match value
+    time[5] = +time[0] < 12 ? ' AM' : ' PM'; // Set AM/PM
+    time[0] = +time[0] % 12 || 12; // Adjust hours
+  }
+  return time.join (''); // return adjusted time or original string
 }
